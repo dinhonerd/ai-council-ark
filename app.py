@@ -172,14 +172,19 @@ st.markdown(custom_css, unsafe_allow_html=True)
 
 
 # Lógica Dinâmica de Imagem ou Vídeo de Fundo
-bg_media = ""
-if os.path.exists("fundo.mp4"):
-    with open("fundo.mp4", "rb") as f:
+bg_media_file = "fundo.mp4" if os.path.exists("fundo.mp4") else ("ds.mp4" if os.path.exists("ds.mp4") else None)
+
+if bg_media_file:
+    with open(bg_media_file, "rb") as f:
         video_data = f.read()
     b64_video = base64.b64encode(video_data).decode()
     bg_media = f"""
     <style>
-    /* Removemos a cor e o grid do app inteiro para o video aparecer atrás! */
+    /* FORÇAR TRANSPARÊNCIA DO APP PARA O VÍDEO APARECER */
+    .stApp {{
+        background: transparent !important;
+    }}
+    
     /* Subscrita do Loading (Bicicleta) no Topo Direito pelo Dino Neon */
     [data-testid="stStatusWidget"] svg {{
         display: none !important;
@@ -196,10 +201,18 @@ if os.path.exists("fundo.mp4"):
         margin-top: -5px;
     }}
     
-    .stApp > header {{
-        background-color: transparent;
-    }}!important;
-        background-image: none !important;
+    header[data-testid="stHeader"] {{
+        background: transparent !important;
+    }}
+    
+    /* Ajuste para garantir que o conteúdo não fique invisível sobre o vídeo */
+    .block-container {{
+        background: rgba(13, 13, 22, 0.7) !important;
+        border-radius: 20px;
+        margin-top: 2rem !important;
+        padding: 2rem !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
     }}
     </style>
     <video autoplay loop muted playsinline style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1;">
