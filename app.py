@@ -247,25 +247,124 @@ if not st.session_state["autenticado"]:
     st.stop()
 
 with st.sidebar:
-    st.markdown("# 🧠 AI Council")
-    st.title("Status do Conselho")
-    st.markdown("Bem-vindo ao **Painel de Modding Ark C++**.")
-    st.markdown("---")
-    if not chave_google or not chave_groq or chave_google == "sua_chave_do_google_aqui":
-        st.error("⚠️ Chaves de API ausentes!")
-    else:
-        st.success("✔️ APIs Online")
-    
-    st.markdown("---")
-    st.caption("Configurações Carregadas")
+    st.markdown("""
+    <div style="padding: 8px 0 16px 0;">
+        <div style="font-size:1.5rem; font-weight:900; color:#a855f7; letter-spacing:-0.5px;">⚡ AI Council</div>
+        <div style="font-size:0.75rem; color:rgba(255,255,255,0.45); margin-top:4px;">ARK Plugin Factory</div>
+    </div>
+    """, unsafe_allow_html=True)
 
-st.title("🧠 Conselho Mult-Agente: ArkApi")
-st.markdown("Cole o seu relatório do Codex abaixo e deixe o Arquiteto e o Revisor de Segurança trabalharem lado a lado.")
+    # STATUS
+    if not chave_google or not chave_groq or chave_google == "sua_chave_do_google_aqui":
+        st.error("⚠️ APIs ausentes!")
+    else:
+        st.markdown("""
+        <div style="background:rgba(74,222,128,0.1); border:1px solid rgba(74,222,128,0.3); border-radius:8px; padding:8px 12px; font-size:0.82rem; color:#4ade80; margin-bottom:12px;">
+            ✔ 3 Agentes Online e prontos
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # O QUE É
+    st.markdown("""
+    <div style="margin-bottom:14px;">
+        <div style="font-size:0.72rem; font-weight:700; color:#a855f7; text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">📌 O que é isso?</div>
+        <div style="font-size:0.82rem; color:rgba(255,255,255,0.65); line-height:1.55;">
+            Um <b style="color:#c4b5fd;">painel de orquestração</b> de 3 IAs especializadas que trabalham em cadeia para gerar, revisar e otimizar código C++ de plugins para servidores <b style="color:#c4b5fd;">ARK: Survival Evolved</b> usando a <b style="color:#c4b5fd;">ArkServerApi</b>.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # COMO FUNCIONA
+    st.markdown("""
+    <div style="margin-bottom:14px;">
+        <div style="font-size:0.72rem; font-weight:700; color:#6366f1; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">⚙️ Como funciona?</div>
+        <div style="font-size:0.81rem; color:rgba(255,255,255,0.6); line-height:1.6;">
+            <div style="margin-bottom:6px;">
+                <span style="background:rgba(168,85,247,0.25); border-radius:4px; padding:1px 7px; font-weight:700; color:#c4b5fd; margin-right:6px;">1</span>
+                Você descreve o plugin que quer criar
+            </div>
+            <div style="margin-bottom:6px;">
+                <span style="background:rgba(99,102,241,0.25); border-radius:4px; padding:1px 7px; font-weight:700; color:#a5b4fc; margin-right:6px;">2</span>
+                As 3 IAs trabalham em cascata
+            </div>
+            <div>
+                <span style="background:rgba(236,72,153,0.25); border-radius:4px; padding:1px 7px; font-weight:700; color:#f9a8d4; margin-right:6px;">3</span>
+                Você recebe o <b style="color:#fff;">.cpp</b> pronto para compilar
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+
+    # OS 3 AGENTES
+    st.markdown("""
+    <div style="font-size:0.72rem; font-weight:700; color:#ec4899; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">🤖 Os 3 Agentes</div>
+
+    <div style="background:rgba(168,85,247,0.1); border-left:3px solid #a855f7; border-radius:0 8px 8px 0; padding:10px 12px; margin-bottom:10px;">
+        <div style="font-weight:700; color:#c4b5fd; font-size:0.84rem;">🧠 Gemini — Arquiteto</div>
+        <div style="font-size:0.78rem; color:rgba(255,255,255,0.5); margin-top:4px; line-height:1.5;">
+            Lê o SDK real da ArkApi e gera o código base com estrutura <code style="background:rgba(0,0,0,0.3); padding:1px 4px; border-radius:3px;">Load/Unload/DllMain</code> obrigatória.
+        </div>
+    </div>
+
+    <div style="background:rgba(99,102,241,0.1); border-left:3px solid #6366f1; border-radius:0 8px 8px 0; padding:10px 12px; margin-bottom:10px;">
+        <div style="font-weight:700; color:#a5b4fc; font-size:0.84rem;">🛡️ Llama — Segurança</div>
+        <div style="font-size:0.78rem; color:rgba(255,255,255,0.5); margin-top:4px; line-height:1.5;">
+            Audita o código do Gemini. Adiciona Null Checks e blindagens anti-crash em todos os ponteiros do servidor.
+        </div>
+    </div>
+
+    <div style="background:rgba(236,72,153,0.1); border-left:3px solid #ec4899; border-radius:0 8px 8px 0; padding:10px 12px; margin-bottom:10px;">
+        <div style="font-weight:700; color:#f9a8d4; font-size:0.84rem;">⚡ Qwen — Performance</div>
+        <div style="font-size:0.78rem; color:rgba(255,255,255,0.5); margin-top:4px; line-height:1.5;">
+            Recebe o código seguro e elimina cópias desnecessárias, otimiza referências e reduz a carga térmica na CPU do servidor.
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    st.markdown("---")
+    st.caption("Gemini · Llama 3 · Qwen 72B")
 
 if not chave_google or not chave_groq or chave_google == "sua_chave_do_google_aqui":
     st.stop()
 
-topico_usuario = st.text_area("📝 Área de Relatório / Desafio C++:", height=150, placeholder="Cole o código crítico ou a missão gigante aqui...")
+# HERO SECTION
+st.markdown("""
+<div style="text-align:center; padding: 40px 20px 10px 20px;">
+    <h1 style="font-size:2.4rem; font-weight:900; background: linear-gradient(135deg, #a855f7, #6366f1, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:8px;">
+        O que você quer construir hoje?
+    </h1>
+    <p style="color:rgba(255,255,255,0.5); font-size:1rem; margin:0;">Descreva seu plugin ARK e deixe o Conselho de 3 IAs forjar o código.</p>
+</div>
+""", unsafe_allow_html=True)
+
+# CARDS DOS AGENTES
+st.markdown("""
+<div style="display:flex; gap:16px; margin: 24px 0;">
+    <div style="flex:1; background:rgba(168,85,247,0.12); border:1px solid rgba(168,85,247,0.3); border-radius:14px; padding:20px; transition:0.3s;">
+        <div style="font-size:1.6rem; margin-bottom:8px;">🧠</div>
+        <div style="font-weight:700; color:#c4b5fd; margin-bottom:4px;">Gemini Arquiteto</div>
+        <div style="font-size:0.8rem; color:rgba(255,255,255,0.45);">Gera a estrutura base do plugin com o SDK do ArkApi.</div>
+    </div>
+    <div style="flex:1; background:rgba(99,102,241,0.12); border:1px solid rgba(99,102,241,0.3); border-radius:14px; padding:20px; transition:0.3s;">
+        <div style="font-size:1.6rem; margin-bottom:8px;">🛡️</div>
+        <div style="font-weight:700; color:#a5b4fc; margin-bottom:4px;">Llama Segurança</div>
+        <div style="font-size:0.8rem; color:rgba(255,255,255,0.45);">Audita Null Checks e anti-crash do servidor ARK.</div>
+    </div>
+    <div style="flex:1; background:rgba(236,72,153,0.12); border:1px solid rgba(236,72,153,0.3); border-radius:14px; padding:20px; transition:0.3s;">
+        <div style="font-size:1.6rem; margin-bottom:8px;">⚡</div>
+        <div style="font-weight:700; color:#f9a8d4; margin-bottom:4px;">Qwen Performance</div>
+        <div style="font-size:0.8rem; color:rgba(255,255,255,0.45);">Otimiza cache, referências e latência de processamento.</div>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+topico_usuario = st.text_area("", height=140, placeholder="🔧  Descreva o plugin, comando de chat, hook ou comportamento que você quer criar...", label_visibility="collapsed")
 
 # Botão enviar
 if st.button("🚀 Iniciar Orquestração do Conselho", type="primary"):
