@@ -16,19 +16,20 @@ st.set_page_config(
 # Injeção de CSS Cyberpunk / Glassmorphism
 custom_css = """
 <style>
-    /* Fundo Principal e Painel de Vidro Translúcido */
+    /* Fundo Principal */
     .stApp {
         background-color: #03040c;
         color: #e0f8ff;
     }
     
-    /* Corpo principal (Flutuando sobre o T-Rex) */
-    div.block-container {
-        background-color: rgba(4, 6, 15, 0.88);
-        padding: 3rem;
-        border-radius: 15px;
-        box-shadow: 0 0 30px rgba(0, 243, 255, 0.1);
-        backdrop-filter: blur(4px);
+    /* Corpo principal e Transparência */
+    div.block-container, [data-testid="stAppViewBlockContainer"], .main {
+        background-color: rgba(4, 6, 15, 0.88) !important;
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
+        backdrop-filter: blur(5px);
     }
     
     /* Inputs text-area */
@@ -36,59 +37,45 @@ custom_css = """
         background-color: rgba(6, 11, 25, 0.85) !important;
         color: #00f3ff !important;
         border: 2px solid #ff00ff !important;
-        border-radius: 12px !important;
+        border-radius: 8px !important;
         font-family: 'Consolas', 'Courier New', monospace;
-        box-shadow: 0 0 10px rgba(255, 0, 255, 0.4), inset 0 0 10px rgba(255, 0, 255, 0.2) !important;
+        box-shadow: 0 0 10px rgba(255, 0, 255, 0.4) !important;
     }
     .stTextArea textarea:focus {
         border-color: #00f3ff !important;
-        box-shadow: 0 0 20px rgba(0, 243, 255, 0.8), inset 0 0 15px rgba(0, 243, 255, 0.4) !important;
+        box-shadow: 0 0 20px rgba(0, 243, 255, 0.8) !important;
     }
     
     /* Botoes Primários Neonexis */
     div.stButton > button:first-child {
-        background: transparent !important;
+        background: rgba(3, 4, 12, 0.9) !important;
         color: #00f3ff !important;
         border: 2px solid #00f3ff !important;
-        border-radius: 30px;
-        padding: 0.6rem 2.5rem;
+        border-radius: 8px;
+        padding: 0.6rem 2.0rem;
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 1.5px;
-        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5), inset 0 0 10px rgba(0, 243, 255, 0.3);
-        transition: all 0.3s ease-in-out;
+        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
     }
     div.stButton > button:first-child:hover {
         background: #00f3ff !important;
         color: #000 !important;
-        box-shadow: 0 0 30px rgba(0, 243, 255, 0.9), inset 0 0 20px rgba(0, 243, 255, 0.6);
-        transform: scale(1.05);
+        box-shadow: 0 0 25px rgba(0, 243, 255, 0.9);
     }
     
     /* Sidebar */
     [data-testid="stSidebar"] {
         background-color: rgba(3, 4, 12, 0.95) !important;
         border-right: 2px solid #ff00ff;
-        box-shadow: 5px 0 25px rgba(255, 0, 255, 0.3);
     }
     
-    /* Headings (Brilho no Texto) */
+    /* Headings */
     h1, h2, h3 {
         color: #00f3ff !important;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        text-shadow: 0 0 10px rgba(0, 243, 255, 0.7), 0 0 20px rgba(0, 243, 255, 0.4) !important;
         text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    h3 {
-        color: #ff00ff !important;
-        text-shadow: 0 0 10px rgba(255, 0, 255, 0.7), 0 0 20px rgba(255, 0, 255, 0.4) !important;
+        text-shadow: 0 0 8px rgba(0, 243, 255, 0.6) !important;
     }
     
-    /* Expander / Containers (As Caixas de IA) */
-    div[data-testid="stVerticalBlock"] > div > div > div {
-        border-color: rgba(0, 243, 255, 0.4) !important;
-    }
     
     /* Ajuste de botoes nativos (Download) */
     .stDownloadButton > button {
@@ -147,6 +134,24 @@ elif os.path.exists("fundo.jpg"):
 load_dotenv()
 chave_google = os.getenv("GOOGLE_API_KEY") or os.getenv("GEMINI_API_KEY")
 chave_groq = os.getenv("GROQ_API_KEY")
+senha_correta = os.getenv("SENHA_PAINEL", "ark123") # Você pode mudar isso nos Secrets do Streamlit!
+
+# SISTEMA DE SEGURANÇA (LOGIN)
+if "autenticado" not in st.session_state:
+    st.session_state["autenticado"] = False
+
+if not st.session_state["autenticado"]:
+    st.markdown("## 🔒 Acesso Restrito")
+    st.info("Este painel consome cotas de IA privadas. Identifique-se para acessar o Conselho.")
+    senha_digitada = st.text_input("Senha de Acesso", type="password")
+    if st.button("Desbloquear Painel"):
+        if senha_digitada == senha_correta:
+            st.session_state["autenticado"] = True
+            st.rerun() # Recarrega a página autenticado
+        else:
+            st.error("❌ Senha Incorreta!")
+    # Trava o app aqui se não estiver autenticado
+    st.stop()
 
 with st.sidebar:
     st.markdown("# 🧠 AI Council")
