@@ -16,87 +16,149 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Injeção de CSS Cyberpunk / Glassmorphism
+# Injeção de CSS AgentGPT - Purple Glassmorphism
 custom_css = """
 <style>
-    /* Fundo Principal */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+
+    /* Reset e Fundo Radial Roxo */
+    * { box-sizing: border-box; }
     .stApp {
-        background-color: #03040c;
-        color: #e0f8ff;
+        background: radial-gradient(circle at top, #3b0764, #020617) !important;
+        font-family: 'Inter', Arial, sans-serif !important;
+        color: #fff !important;
     }
-    
-    /* Esconde a faixa preta no topo (Header padrão do Streamlit) */
+
+    /* Header transparente */
     header[data-testid="stHeader"] {
-        background-color: transparent !important;
+        background: transparent !important;
     }
-    
-    /* Corpo principal e Transparência */
-    div.block-container, [data-testid="stAppViewBlockContainer"], .main {
-        background-color: rgba(4, 6, 15, 0.88) !important;
-        padding-top: 1rem !important;
-        padding-bottom: 2rem;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
-        backdrop-filter: blur(5px);
+
+    /* Corpo Principal */
+    div.block-container, [data-testid="stAppViewBlockContainer"] {
+        background: transparent !important;
+        padding-top: 1.5rem !important;
     }
-    
-    /* Inputs text-area */
-    .stTextArea textarea {
-        background-color: rgba(6, 11, 25, 0.85) !important;
-        color: #00f3ff !important;
-        border: 2px solid #ff00ff !important;
-        border-radius: 8px !important;
-        font-family: 'Consolas', 'Courier New', monospace;
-        box-shadow: 0 0 10px rgba(255, 0, 255, 0.4) !important;
+
+    /* SIDEBAR - Glassmorphism Escuro */
+    [data-testid="stSidebar"] {
+        background: rgba(0,0,0,0.45) !important;
+        border-right: 1px solid rgba(255,255,255,0.1) !important;
+        backdrop-filter: blur(20px) !important;
     }
-    .stTextArea textarea:focus {
-        border-color: #00f3ff !important;
-        box-shadow: 0 0 20px rgba(0, 243, 255, 0.8) !important;
+    [data-testid="stSidebar"] * {
+        color: #e2d9f3 !important;
     }
-    
-    /* Botoes Primários Neonexis */
+
+    /* HEADINGS */
+    h1, h2, h3 {
+        color: #fff !important;
+        font-weight: 900 !important;
+        text-shadow: none !important;
+        text-transform: none !important;
+        font-family: 'Inter', Arial, sans-serif !important;
+        letter-spacing: -0.5px;
+    }
+    h1 { font-size: 2rem !important; }
+
+    /* TEXT INPUT e TEXTAREA */
+    .stTextArea textarea, .stTextInput input {
+        background: rgba(2, 6, 23, 0.7) !important;
+        color: #fff !important;
+        border: 1px solid rgba(255,255,255,0.15) !important;
+        border-radius: 10px !important;
+        font-family: 'Inter', Arial, sans-serif !important;
+        backdrop-filter: blur(10px);
+        transition: border 0.3s !important;
+    }
+    .stTextArea textarea:focus, .stTextInput input:focus {
+        border-color: #7c3aed !important;
+        box-shadow: 0 0 20px rgba(124,58,237,0.5) !important;
+    }
+
+    /* BOTÃO PRINCIPAL */
     div.stButton > button:first-child {
-        background: rgba(3, 4, 12, 0.9) !important;
-        color: #00f3ff !important;
-        border: 2px solid #00f3ff !important;
-        border-radius: 8px;
-        padding: 0.6rem 2.0rem;
-        font-weight: 900;
-        text-transform: uppercase;
-        box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+        background: #7c3aed !important;
+        color: #fff !important;
+        border: none !important;
+        border-radius: 10px !important;
+        padding: 0.65rem 2rem !important;
+        font-weight: 700 !important;
+        font-family: 'Inter', Arial, sans-serif !important;
+        letter-spacing: 0.3px !important;
+        text-transform: none !important;
+        box-shadow: 0 0 20px rgba(124,58,237,0.5) !important;
+        transition: all 0.3s !important;
     }
     div.stButton > button:first-child:hover {
-        background: #00f3ff !important;
-        color: #000 !important;
-        box-shadow: 0 0 25px rgba(0, 243, 255, 0.9);
+        background: #6d28d9 !important;
+        box-shadow: 0 0 35px rgba(124,58,237,0.9) !important;
+        transform: translateY(-2px) !important;
     }
-    
-    /* Sidebar */
-    [data-testid="stSidebar"] {
-        background-color: rgba(3, 4, 12, 0.95) !important;
-        border-right: 2px solid #ff00ff;
+
+    /* CARDS / CONTAINERS */
+    [data-testid="stExpander"],
+    div[data-testid="stVerticalBlock"] > div[data-testid="stHorizontalBlock"] > div {
+        background: rgba(255,255,255,0.05) !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(255,255,255,0.08) !important;
+        backdrop-filter: blur(10px) !important;
+        transition: all 0.3s !important;
     }
-    
-    /* Headings */
-    h1, h2, h3 {
-        color: #00f3ff !important;
-        text-transform: uppercase;
-        text-shadow: 0 0 8px rgba(0, 243, 255, 0.6) !important;
+
+    /* Tabs */
+    [data-testid="stTabs"] button {
+        color: rgba(255,255,255,0.6) !important;
+        font-family: 'Inter', Arial, sans-serif !important;
+        font-weight: 600 !important;
+        border-bottom: 2px solid transparent !important;
     }
-    
-    
-    /* Ajuste de botoes nativos (Download) */
+    [data-testid="stTabs"] button[aria-selected="true"] {
+        color: #a855f7 !important;
+        border-bottom: 2px solid #a855f7 !important;
+    }
+
+    /* SUCCESS / INFO / ERROR */
+    .stSuccess {
+        background: rgba(74,222,128,0.1) !important;
+        border-left: 3px solid #4ade80 !important;
+        border-radius: 8px !important;
+    }
+    .stError {
+        background: rgba(239,68,68,0.1) !important;
+        border-left: 3px solid #ef4444 !important;
+        border-radius: 8px !important;
+    }
+    .stInfo {
+        background: rgba(124,58,237,0.15) !important;
+        border-left: 3px solid #7c3aed !important;
+        border-radius: 8px !important;
+    }
+
+    /* DOWNLOAD BUTTON */
     .stDownloadButton > button {
-        background-color: transparent !important;
-        color: #ff00ff !important;
-        border: 1px solid #ff00ff !important;
-        border-radius: 8px;
-        box-shadow: 0 0 8px rgba(255, 0, 255, 0.3);
+        background: rgba(124,58,237,0.2) !important;
+        color: #c4b5fd !important;
+        border: 1px solid #7c3aed !important;
+        border-radius: 8px !important;
+        transition: all 0.3s !important;
     }
     .stDownloadButton > button:hover {
-        background-color: #ff00ff !important;
-        color: black !important;
-        box-shadow: 0 0 15px rgba(255, 0, 255, 0.8);
+        background: #7c3aed !important;
+        color: #fff !important;
+    }
+
+    /* CODE BLOCKS */
+    code, pre {
+        background: rgba(0,0,0,0.4) !important;
+        border: 1px solid rgba(124,58,237,0.3) !important;
+        border-radius: 8px !important;
+        color: #c4b5fd !important;
+    }
+
+    /* SPINNER / STATUS */
+    [data-testid="stStatusWidget"] {
+        color: #a855f7 !important;
     }
 </style>
 """
