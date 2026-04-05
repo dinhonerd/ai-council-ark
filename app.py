@@ -16,65 +16,77 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Injeção de CSS AgentGPT - Purple Glassmorphism
+# Injeção de CSS AgentGPT Premium Dark
 custom_css = """
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
 
-    /* Reset e Fundo Radial Roxo */
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; }
+
+    /* FUNDO PRINCIPAL - Quase preto com leve roxo no topo */
     .stApp {
-        background: radial-gradient(circle at top, #3b0764, #020617) !important;
-        font-family: 'Inter', Arial, sans-serif !important;
-        color: #fff !important;
+        background: linear-gradient(160deg, #130820 0%, #0a0a12 40%, #080810 100%) !important;
+        font-family: 'Inter', sans-serif !important;
+        color: #e8e8f0 !important;
+        min-height: 100vh;
     }
 
     /* Header transparente */
     header[data-testid="stHeader"] {
         background: transparent !important;
+        border-bottom: 1px solid rgba(255,255,255,0.06) !important;
     }
 
     /* Corpo Principal */
     div.block-container, [data-testid="stAppViewBlockContainer"] {
         background: transparent !important;
-        padding-top: 1.5rem !important;
+        padding-top: 2rem !important;
+        max-width: 860px !important;
     }
 
-    /* SIDEBAR - Glassmorphism Escuro */
+    /* SIDEBAR */
     [data-testid="stSidebar"] {
-        background: rgba(0,0,0,0.45) !important;
-        border-right: 1px solid rgba(255,255,255,0.1) !important;
-        backdrop-filter: blur(20px) !important;
+        background: #0d0d16 !important;
+        border-right: 1px solid rgba(255,255,255,0.07) !important;
     }
-    [data-testid="stSidebar"] * {
-        color: #e2d9f3 !important;
+    [data-testid="stSidebar"] > div:first-child {
+        padding: 16px 14px !important;
+    }
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] div,
+    [data-testid="stSidebar"] label {
+        color: rgba(255,255,255,0.75) !important;
+        font-size: 0.85rem !important;
     }
 
     /* HEADINGS */
     h1, h2, h3 {
-        color: #fff !important;
-        font-weight: 900 !important;
+        color: #ffffff !important;
+        font-weight: 700 !important;
         text-shadow: none !important;
         text-transform: none !important;
-        font-family: 'Inter', Arial, sans-serif !important;
-        letter-spacing: -0.5px;
+        font-family: 'Inter', sans-serif !important;
     }
-    h1 { font-size: 2rem !important; }
 
-    /* TEXT INPUT e TEXTAREA */
-    .stTextArea textarea, .stTextInput input {
-        background: rgba(2, 6, 23, 0.7) !important;
-        color: #fff !important;
-        border: 1px solid rgba(255,255,255,0.15) !important;
-        border-radius: 10px !important;
-        font-family: 'Inter', Arial, sans-serif !important;
-        backdrop-filter: blur(10px);
-        transition: border 0.3s !important;
+    /* INPUT / TEXTAREA - Estilo chat escuro */
+    .stTextArea textarea {
+        background: #13131f !important;
+        color: #e8e8f0 !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 14px !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 0.95rem !important;
+        padding: 16px !important;
+        transition: border-color 0.2s, box-shadow 0.2s !important;
+        resize: none !important;
     }
-    .stTextArea textarea:focus, .stTextInput input:focus {
+    .stTextArea textarea:focus {
         border-color: #7c3aed !important;
-        box-shadow: 0 0 20px rgba(124,58,237,0.5) !important;
+        box-shadow: 0 0 0 3px rgba(124,58,237,0.2) !important;
+        outline: none !important;
     }
+    .stTextArea textarea::placeholder { color: rgba(255,255,255,0.3) !important; }
 
     /* BOTÃO PRINCIPAL */
     div.stButton > button:first-child {
@@ -82,36 +94,35 @@ custom_css = """
         color: #fff !important;
         border: none !important;
         border-radius: 10px !important;
-        padding: 0.65rem 2rem !important;
-        font-weight: 700 !important;
-        font-family: 'Inter', Arial, sans-serif !important;
-        letter-spacing: 0.3px !important;
+        padding: 0.7rem 2.2rem !important;
+        font-weight: 600 !important;
+        font-family: 'Inter', sans-serif !important;
+        font-size: 0.9rem !important;
+        letter-spacing: 0.2px !important;
         text-transform: none !important;
-        box-shadow: 0 0 20px rgba(124,58,237,0.5) !important;
-        transition: all 0.3s !important;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 2px 20px rgba(124,58,237,0.35) !important;
     }
     div.stButton > button:first-child:hover {
         background: #6d28d9 !important;
-        box-shadow: 0 0 35px rgba(124,58,237,0.9) !important;
-        transform: translateY(-2px) !important;
+        box-shadow: 0 4px 28px rgba(124,58,237,0.6) !important;
+        transform: translateY(-1px) !important;
+    }
+    div.stButton > button:first-child:active {
+        transform: translateY(0) !important;
     }
 
-    /* CARDS / CONTAINERS */
-    [data-testid="stExpander"],
-    div[data-testid="stVerticalBlock"] > div[data-testid="stHorizontalBlock"] > div {
-        background: rgba(255,255,255,0.05) !important;
-        border-radius: 12px !important;
-        border: 1px solid rgba(255,255,255,0.08) !important;
-        backdrop-filter: blur(10px) !important;
-        transition: all 0.3s !important;
+    /* TABS */
+    [data-testid="stTabs"] {
+        border-bottom: 1px solid rgba(255,255,255,0.08) !important;
     }
-
-    /* Tabs */
     [data-testid="stTabs"] button {
-        color: rgba(255,255,255,0.6) !important;
-        font-family: 'Inter', Arial, sans-serif !important;
-        font-weight: 600 !important;
+        color: rgba(255,255,255,0.45) !important;
+        font-family: 'Inter', sans-serif !important;
+        font-weight: 500 !important;
+        font-size: 0.88rem !important;
         border-bottom: 2px solid transparent !important;
+        padding-bottom: 10px !important;
     }
     [data-testid="stTabs"] button[aria-selected="true"] {
         color: #a855f7 !important;
@@ -119,29 +130,20 @@ custom_css = """
     }
 
     /* SUCCESS / INFO / ERROR */
-    .stSuccess {
-        background: rgba(74,222,128,0.1) !important;
-        border-left: 3px solid #4ade80 !important;
-        border-radius: 8px !important;
-    }
-    .stError {
-        background: rgba(239,68,68,0.1) !important;
-        border-left: 3px solid #ef4444 !important;
-        border-radius: 8px !important;
-    }
-    .stInfo {
-        background: rgba(124,58,237,0.15) !important;
-        border-left: 3px solid #7c3aed !important;
-        border-radius: 8px !important;
+    [data-testid="stNotification"],
+    div[data-baseweb="notification"] {
+        border-radius: 10px !important;
+        font-family: 'Inter', sans-serif !important;
     }
 
     /* DOWNLOAD BUTTON */
     .stDownloadButton > button {
-        background: rgba(124,58,237,0.2) !important;
+        background: rgba(124,58,237,0.15) !important;
         color: #c4b5fd !important;
-        border: 1px solid #7c3aed !important;
+        border: 1px solid rgba(124,58,237,0.4) !important;
         border-radius: 8px !important;
-        transition: all 0.3s !important;
+        transition: all 0.2s !important;
+        font-family: 'Inter', sans-serif !important;
     }
     .stDownloadButton > button:hover {
         background: #7c3aed !important;
@@ -149,20 +151,25 @@ custom_css = """
     }
 
     /* CODE BLOCKS */
-    code, pre {
-        background: rgba(0,0,0,0.4) !important;
-        border: 1px solid rgba(124,58,237,0.3) !important;
-        border-radius: 8px !important;
+    pre {
+        background: #0d0d1a !important;
+        border: 1px solid rgba(124,58,237,0.25) !important;
+        border-radius: 10px !important;
+    }
+    code {
         color: #c4b5fd !important;
+        font-size: 0.85rem !important;
     }
 
-    /* SPINNER / STATUS */
-    [data-testid="stStatusWidget"] {
-        color: #a855f7 !important;
-    }
+    /* STATUS WIDGET */
+    [data-testid="stStatusWidget"] { color: #a855f7 !important; }
+    
+    /* Esconde label vazio do textarea */
+    .stTextArea label[data-testid="stWidgetLabel"] { display: none !important; }
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
+
 
 # Lógica Dinâmica de Imagem ou Vídeo de Fundo
 bg_media = ""
@@ -330,41 +337,94 @@ with st.sidebar:
     st.markdown("---")
     st.caption("Gemini · Llama 3 · Qwen 72B")
 
-if not chave_google or not chave_groq or chave_google == "sua_chave_do_google_aqui":
-    st.stop()
+# Carrega imagens 3D dos agentes em base64
+def _b64_img(path):
+    try:
+        with open(path, 'rb') as f:
+            return base64.b64encode(f.read()).decode()
+    except:
+        return ""
+
+_b64_brain = _b64_img(os.path.join(os.path.dirname(__file__), "img_brain.b64").replace(".b64","") + "/../img_brain.b64")
+
+# Tenta carregar as imagens geradas
+_brain_path = os.path.join(os.path.dirname(__file__), "img_brain.b64")
+_shield_path = os.path.join(os.path.dirname(__file__), "img_shield.b64")
+_light_path  = os.path.join(os.path.dirname(__file__), "img_lightning.b64")
+
+def _load_b64(p):
+    try:
+        with open(p) as f: return f.read().strip()
+    except: return ""
+
+b64_brain   = _load_b64(_brain_path)
+b64_shield  = _load_b64(_shield_path)
+b64_light   = _load_b64(_light_path)
+
+img_brain   = f"data:image/png;base64,{b64_brain}"   if b64_brain   else ""
+img_shield  = f"data:image/png;base64,{b64_shield}"  if b64_shield  else ""
+img_light   = f"data:image/png;base64,{b64_light}"   if b64_light   else ""
 
 # HERO SECTION
 st.markdown("""
-<div style="text-align:center; padding: 40px 20px 10px 20px;">
-    <h1 style="font-size:2.4rem; font-weight:900; background: linear-gradient(135deg, #a855f7, #6366f1, #ec4899); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:8px;">
+<div style="padding: 48px 0 20px 0;">
+    <h1 style="font-size:2rem; font-weight:700; color:#ffffff; margin-bottom:10px; line-height:1.3;">
         O que você quer construir hoje?
     </h1>
-    <p style="color:rgba(255,255,255,0.5); font-size:1rem; margin:0;">Descreva seu plugin ARK e deixe o Conselho de 3 IAs forjar o código.</p>
+    <p style="color:rgba(255,255,255,0.4); font-size:0.95rem; margin:0;">
+        Descreva seu plugin ARK e o Conselho de 3 IAs forja o código C++ pronto para compilar.
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
-# CARDS DOS AGENTES
-st.markdown("""
-<div style="display:flex; gap:16px; margin: 24px 0;">
-    <div style="flex:1; background:rgba(168,85,247,0.12); border:1px solid rgba(168,85,247,0.3); border-radius:14px; padding:20px; transition:0.3s;">
-        <div style="font-size:1.6rem; margin-bottom:8px;">🧠</div>
-        <div style="font-weight:700; color:#c4b5fd; margin-bottom:4px;">Gemini Arquiteto</div>
-        <div style="font-size:0.8rem; color:rgba(255,255,255,0.45);">Gera a estrutura base do plugin com o SDK do ArkApi.</div>
+# INPUT CENTRALIZADO - Estilo chat do AgentGPT
+topico_usuario = st.text_area("", height=130,
+    placeholder="✦  Descreva o plugin, comando de chat, hook ou comportamento que você quer criar...",
+    label_visibility="collapsed")
+
+# CARDS DOS AGENTES - Estilo AgentGPT com imagem 3D e botão Go
+card_style = "flex:1; background:#13131f; border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:20px 18px 16px; cursor:pointer; transition:all 0.2s; position:relative; overflow:hidden;"
+hover_style = "border-color:rgba(255,255,255,0.15) !important; transform:translateY(-3px); box-shadow:0 8px 32px rgba(0,0,0,0.4);"
+
+brain_img_html   = f'<img src="{img_brain}" style="width:72px; height:72px; object-fit:contain; margin-bottom:14px; filter:drop-shadow(0 0 12px rgba(168,85,247,0.6));">'   if img_brain   else '<div style="font-size:3rem; margin-bottom:14px;">🧠</div>'
+shield_img_html  = f'<img src="{img_shield}" style="width:72px; height:72px; object-fit:contain; margin-bottom:14px; filter:drop-shadow(0 0 12px rgba(99,102,241,0.6));">'  if img_shield  else '<div style="font-size:3rem; margin-bottom:14px;">🛡️</div>'
+light_img_html   = f'<img src="{img_light}" style="width:72px; height:72px; object-fit:contain; margin-bottom:14px; filter:drop-shadow(0 0 12px rgba(236,72,153,0.6));">'   if img_light   else '<div style="font-size:3rem; margin-bottom:14px;">⚡</div>'
+
+st.markdown(f"""
+<style>
+.ark-card {{ {card_style} }}
+.ark-card:hover {{ {hover_style} }}
+.ark-go {{
+    display:inline-flex; align-items:center; justify-content:center;
+    background:#7c3aed; color:#fff; border:none; border-radius:8px;
+    font-size:0.78rem; font-weight:600; padding:5px 14px;
+    position:absolute; bottom:16px; right:16px;
+    font-family:'Inter',sans-serif; letter-spacing:0.3px;
+}}
+</style>
+<div style="display:flex; gap:14px; margin:28px 0 32px;">
+    <div class="ark-card">
+        {brain_img_html}
+        <div style="font-weight:700; color:#e8e8f0; font-size:0.95rem; margin-bottom:6px;">Gemini Arquiteto</div>
+        <div style="font-size:0.78rem; color:rgba(255,255,255,0.4); line-height:1.5;">Gera o código base com a ArkServerApi e injeta o SDK real do ARK.</div>
+        <span class="ark-go">Go →</span>
     </div>
-    <div style="flex:1; background:rgba(99,102,241,0.12); border:1px solid rgba(99,102,241,0.3); border-radius:14px; padding:20px; transition:0.3s;">
-        <div style="font-size:1.6rem; margin-bottom:8px;">🛡️</div>
-        <div style="font-weight:700; color:#a5b4fc; margin-bottom:4px;">Llama Segurança</div>
-        <div style="font-size:0.8rem; color:rgba(255,255,255,0.45);">Audita Null Checks e anti-crash do servidor ARK.</div>
+    <div class="ark-card">
+        {shield_img_html}
+        <div style="font-weight:700; color:#e8e8f0; font-size:0.95rem; margin-bottom:6px;">Llama Segurança</div>
+        <div style="font-size:0.78rem; color:rgba(255,255,255,0.4); line-height:1.5;">Audita Null Checks e blindagens anti-crash em todos os ponteiros.</div>
+        <span class="ark-go">Go →</span>
     </div>
-    <div style="flex:1; background:rgba(236,72,153,0.12); border:1px solid rgba(236,72,153,0.3); border-radius:14px; padding:20px; transition:0.3s;">
-        <div style="font-size:1.6rem; margin-bottom:8px;">⚡</div>
-        <div style="font-weight:700; color:#f9a8d4; margin-bottom:4px;">Qwen Performance</div>
-        <div style="font-size:0.8rem; color:rgba(255,255,255,0.45);">Otimiza cache, referências e latência de processamento.</div>
+    <div class="ark-card">
+        {light_img_html}
+        <div style="font-weight:700; color:#e8e8f0; font-size:0.95rem; margin-bottom:6px;">Qwen Performance</div>
+        <div style="font-size:0.78rem; color:rgba(255,255,255,0.4); line-height:1.5;">Otimiza cache, referências e reduz carga térmica na CPU do servidor.</div>
+        <span class="ark-go">Go →</span>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-topico_usuario = st.text_area("", height=140, placeholder="🔧  Descreva o plugin, comando de chat, hook ou comportamento que você quer criar...", label_visibility="collapsed")
+
 
 # Botão enviar
 if st.button("🚀 Iniciar Orquestração do Conselho", type="primary"):
