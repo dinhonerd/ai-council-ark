@@ -22,10 +22,15 @@ custom_css = """
         color: #e0f8ff;
     }
     
+    /* Esconde a faixa preta no topo (Header padrão do Streamlit) */
+    header[data-testid="stHeader"] {
+        background-color: transparent !important;
+    }
+    
     /* Corpo principal e Transparência */
     div.block-container, [data-testid="stAppViewBlockContainer"], .main {
         background-color: rgba(4, 6, 15, 0.88) !important;
-        padding-top: 2rem;
+        padding-top: 1rem !important;
         padding-bottom: 2rem;
         border-radius: 10px;
         box-shadow: 0 0 20px rgba(0, 243, 255, 0.1);
