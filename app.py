@@ -40,8 +40,11 @@ custom_css = """
     /* Corpo Principal */
     div.block-container, [data-testid="stAppViewBlockContainer"] {
         background: transparent !important;
-        padding-top: 2rem !important;
-        max-width: 860px !important;
+        width: min(1320px, calc(100vw - 320px)) !important;
+        max-width: min(1320px, calc(100vw - 320px)) !important;
+        padding: 1.5rem 2rem 2.5rem 2rem !important;
+        margin-left: 0 !important;
+        margin-right: auto !important;
     }
 
     /* SIDEBAR */
@@ -166,6 +169,35 @@ custom_css = """
     
     /* Esconde label vazio do textarea */
     .stTextArea label[data-testid="stWidgetLabel"] { display: none !important; }
+
+    .ark-card-row {
+        display: flex;
+        gap: 14px;
+        margin: 28px 0 32px;
+        flex-wrap: wrap;
+        align-items: stretch;
+    }
+
+    .ark-card-row .ark-card {
+        min-width: 250px;
+        flex: 1 1 280px;
+    }
+
+    @media (max-width: 1100px) {
+        div.block-container, [data-testid="stAppViewBlockContainer"] {
+            width: calc(100vw - 120px) !important;
+            max-width: calc(100vw - 120px) !important;
+            padding: 1.25rem 1.25rem 2rem 1.25rem !important;
+        }
+    }
+
+    @media (max-width: 768px) {
+        div.block-container, [data-testid="stAppViewBlockContainer"] {
+            width: calc(100vw - 2rem) !important;
+            max-width: calc(100vw - 2rem) !important;
+            padding: 1rem !important;
+        }
+    }
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
@@ -207,12 +239,14 @@ if bg_media_file:
     
     /* Ajuste para garantir que o conteúdo não fique invisível sobre o vídeo */
     .block-container {{
-        background: rgba(13, 13, 22, 0.7) !important;
+        background: rgba(13, 13, 22, 0.58) !important;
         border-radius: 20px;
-        margin-top: 2rem !important;
+        margin-top: 1.25rem !important;
         padding: 2rem !important;
         backdrop-filter: blur(10px);
         border: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        overflow: hidden;
     }}
     </style>
     <video autoplay loop muted playsinline style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1;">
@@ -415,7 +449,7 @@ st.markdown(f"""
     font-family:'Inter',sans-serif; letter-spacing:0.3px;
 }}
 </style>
-<div style="display:flex; gap:14px; margin:28px 0 32px;">
+<div class="ark-card-row">
     <div class="ark-card">
         {brain_img_html}
         <div style="font-weight:700; color:#e8e8f0; font-size:0.95rem; margin-bottom:6px;">Gemini Arquiteto</div>
