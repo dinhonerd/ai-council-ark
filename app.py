@@ -40,9 +40,10 @@ custom_css = """
     /* Corpo Principal */
     div.block-container, [data-testid="stAppViewBlockContainer"] {
         background: transparent !important;
-        width: min(1320px, calc(100vw - 320px)) !important;
-        max-width: min(1320px, calc(100vw - 320px)) !important;
-        padding: 1.5rem 2rem 2.5rem 2rem !important;
+        max-width: 980px !important;
+        padding-top: 2rem !important;
+        padding-left: 1.75rem !important;
+        padding-right: 1.75rem !important;
         margin-left: 0 !important;
         margin-right: auto !important;
     }
@@ -179,23 +180,28 @@ custom_css = """
     }
 
     .ark-card-row .ark-card {
-        min-width: 250px;
-        flex: 1 1 280px;
+        min-width: 220px;
+        flex: 1 1 220px;
     }
 
     @media (max-width: 1100px) {
         div.block-container, [data-testid="stAppViewBlockContainer"] {
-            width: calc(100vw - 120px) !important;
-            max-width: calc(100vw - 120px) !important;
-            padding: 1.25rem 1.25rem 2rem 1.25rem !important;
+            max-width: 920px !important;
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
         }
     }
 
     @media (max-width: 768px) {
         div.block-container, [data-testid="stAppViewBlockContainer"] {
-            width: calc(100vw - 2rem) !important;
-            max-width: calc(100vw - 2rem) !important;
-            padding: 1rem !important;
+            max-width: 100% !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+
+        .ark-card-row .ark-card {
+            min-width: 100%;
+            flex-basis: 100%;
         }
     }
 </style>
@@ -239,14 +245,14 @@ if bg_media_file:
     
     /* Ajuste para garantir que o conteúdo não fique invisível sobre o vídeo */
     .block-container {{
-        background: rgba(13, 13, 22, 0.58) !important;
-        border-radius: 20px;
-        margin-top: 1.25rem !important;
-        padding: 2rem !important;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: transparent !important;
+        border-radius: 0 !important;
+        margin-top: 0 !important;
+        padding: 0 !important;
+        backdrop-filter: none !important;
+        border: none !important;
         position: relative;
-        overflow: hidden;
+        overflow: visible !important;
     }}
     </style>
     <video autoplay loop muted playsinline style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; object-fit: cover; z-index: -1;">
