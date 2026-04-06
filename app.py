@@ -40,11 +40,12 @@ custom_css = """
     /* Corpo Principal */
     div.block-container, [data-testid="stAppViewBlockContainer"] {
         background: transparent !important;
-        max-width: 980px !important;
+        width: 100% !important;
+        max-width: 1120px !important;
         padding-top: 2rem !important;
         padding-left: 1.75rem !important;
         padding-right: 1.75rem !important;
-        margin-left: 0 !important;
+        margin-left: auto !important;
         margin-right: auto !important;
     }
 
@@ -177,6 +178,7 @@ custom_css = """
         margin: 28px 0 32px;
         flex-wrap: wrap;
         align-items: stretch;
+        justify-content: center;
     }
 
     .ark-card-row .ark-card {
@@ -186,7 +188,7 @@ custom_css = """
 
     @media (max-width: 1100px) {
         div.block-container, [data-testid="stAppViewBlockContainer"] {
-            max-width: 920px !important;
+            max-width: 980px !important;
             padding-left: 1.25rem !important;
             padding-right: 1.25rem !important;
         }
